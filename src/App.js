@@ -15,16 +15,6 @@ function App() {
   const [value, setValue] = useState(defaultValues);
   const [values, setValues] = useState(defaultValues);
 
-  const onKeyDown = (e, setE) => {
-    if (e.key === "Enter") {
-      setE(e.target.value.split(','));
-    }
-  };
-
-  const onBlur = (e, setE) => {
-    setE(e.target.value.split(','));
-  };
-
   const getChartByType = (type) => {
     switch (type) {
       case 'Bar':
@@ -58,11 +48,9 @@ function App() {
           id="X_axis"
           className="chartAxis__item"
           value={label}
-          onChange={(e) => {
-            setLabel(e.target.value);
-          }}
-          onKeyDown={(e) => onKeyDown(e, setLabels)}
-          onBlur={(e) => onBlur(e, setLabels)}
+          onChange={(e) => setLabel(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && setLabels(label.split(','))}
+          onBlur={() => setLabels(label.split(','))}
         />
 
         <label for="Y_axis">
@@ -74,11 +62,9 @@ function App() {
           id="Y_axis"
           className="chartAxis__item"
           value={value}
-          onChange={(e) => {
-            setValue(e.target.value);
-          }}
-          onKeyDown={(e) => onKeyDown(e, setValues)}
-          onBlur={(e) => onBlur(e, setValues)}
+          onChange={(e) => setValue(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && setValues(value.split(','))}
+          onBlur={() => setValues(value.split(','))}
         />
       </div>
 
