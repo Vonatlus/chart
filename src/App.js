@@ -2,9 +2,36 @@ import './App.css';
 import { Line, Bar, Radar, Doughnut, Pie, PolarArea } from 'react-chartjs-2';
 import { Chart as Chartjs } from 'chart.js/auto';
 import { useState } from 'react';
+import { barData, lineData, radarData, DoughnutAndPieData, polarAreaData } from './dataStyle';
 
 const defaultLabels = ['January', 'February', 'March', 'April', 'May'];
 const defaultValues = [1, 5, 10, 1, 2];
+const typesOfChart = ['Bar', 'Line', 'Radar', 'Doughnut', 'Pie', 'PolarArea'];
+
+const getChartByType = (type) => {
+  switch (type) {
+    case 'Bar':
+      return [Bar, barData];
+
+    case 'Line':
+      return [Line, lineData];
+
+    case 'Radar':
+      return [Radar, radarData];
+
+    case 'Doughnut':
+      return [Doughnut, DoughnutAndPieData];
+
+    case 'Pie':
+      return [Pie, DoughnutAndPieData];
+
+    case 'PolarArea':
+      return [PolarArea, polarAreaData];
+
+    default:
+      break;
+  }
+}
 
 function App() {
   const [chartType, setChartType] = useState('Bar');
@@ -15,32 +42,12 @@ function App() {
   const [value, setValue] = useState(defaultValues);
   const [values, setValues] = useState(defaultValues);
 
-  const getChartByType = (type) => {
-    switch (type) {
-      case 'Bar':
-        return Bar;
+  const Chart = getChartByType(chartType)[0];
+  const data = getChartByType(chartType)[1];
 
-      case 'Line':
-        return Line;
-
-      case 'Radar':
-        return Radar;
-
-      case 'Doughnut':
-        return Doughnut;
-
-      case 'Pie':
-        return Pie;
-
-      case 'PolarArea':
-        return PolarArea;
-
-      default:
-        return Bar;
-    }
-  }
-
-  const Chart = getChartByType(chartType);
+  data.labels = labels;
+  data.datasets[0].data = values
+  data.datasets[0].label = 'Month';
 
   return (
     <div className="App">
@@ -77,30 +84,7 @@ function App() {
       <div>
         <Chart
           height={400}
-          data={{
-            labels,
-            datasets: [{
-              label: 'Date',
-              data: values,
-              backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-              ],
-              borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-              ],
-              borderWidth: 1,
-            }]
-          }}
+          data={data}
           options={{
             maintainAspectRatio: false,
           }}
@@ -108,72 +92,19 @@ function App() {
       </div>
 
       <div className="chartType">
-        <label>
-          <input
-            className="chartType__item"
-            type="radio"
-            name="chartType"
-            value="Bar"
-            onClick={(e) => setChartType(e.target.value)}
-            checked={chartType === "Bar"}
-          />
-          Bar Chart
-        </label>
-
-        <label>
-          <input
-            className="chartType__item"
-            type="radio"
-            name="chartType"
-            value="Line"
-            onClick={(e) => setChartType(e.target.value)}
-          />
-          Line Chart
-        </label>
-
-        <label>
-          <input
-            className="chartType__item"
-            type="radio"
-            name="chartType"
-            value="Radar"
-            onClick={(e) => setChartType(e.target.value)}
-          />
-          Radar Chart
-        </label>
-
-        <label>
-          <input
-            className="chartType__item"
-            type="radio"
-            name="chartType"
-            value="Doughnut"
-            onClick={(e) => setChartType(e.target.value)}
-          />
-          Doughnut Chart
-        </label>
-
-        <label>
-          <input
-            className="chartType__item"
-            type="radio"
-            name="chartType"
-            value="Pie"
-            onClick={(e) => setChartType(e.target.value)}
-          />
-          Pie Chart
-        </label>
-
-        <label>
-          <input
-            className="chartType__item"
-            type="radio"
-            name="chartType"
-            value="PolarArea"
-            onClick={(e) => setChartType(e.target.value)}
-          />
-          PolarArea Chart
-        </label>
+        {typesOfChart.map((type) => (
+          <label>
+            <input
+              className="chartType__item"
+              type="radio"
+              name="chartType"
+              value={type}
+              onClick={(e) => setChartType(e.target.value)}
+              checked={chartType === type}
+            />
+            {`${type} Chart`}
+          </label>
+        ))}
       </div>
     </div>
   );
