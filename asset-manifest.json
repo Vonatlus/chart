@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Vonatlus/chart/static/css/main.aa5e5765.css",
+    "main.js": "/Vonatlus/chart/static/js/main.98aa21da.js",
+    "index.html": "/Vonatlus/chart/index.html",
+    "main.aa5e5765.css.map": "/Vonatlus/chart/static/css/main.aa5e5765.css.map",
+    "main.98aa21da.js.map": "/Vonatlus/chart/static/js/main.98aa21da.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.aa5e5765.css",
+    "static/js/main.98aa21da.js"
+  ]
+}

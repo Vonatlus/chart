@@ -1,0 +1,2 @@
+.App{border:1px solid #000;margin:10px auto;padding:20px;width:50vw}.App,.chartAxis,.chartType{display:flex;flex-direction:column}.chartType{align-content:space-between;flex-wrap:wrap;height:70px}.chartAxis__item,.chartType__item{margin:10px 10px 10px 0}@media (max-width:800px){.App{width:calc(100vw - 60px)}}@media (max-width:500px){.chartType{height:100px}}
+/*# sourceMappingURL=main.aa5e5765.css.map*/
